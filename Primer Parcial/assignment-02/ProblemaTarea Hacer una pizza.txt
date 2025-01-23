@@ -1,0 +1,14 @@
+Problema/Tarea: Hacer una pizza
+
+1.- Checar si tienes horno, refrigerador y servicios como el gas, el agua, y la luz.
+2.- Checar si tenemos una bandeja de metal, harina, levadura, aceite de oliva, salsa de tomate, queso rayado y pepperoni
+	2a.- Si no tenemos los ingredientes, ir a la tienda mas cercana para adquirirlos
+3.- Una vez que ya tengas los materiales, hay que empezar a hacer la masa. Para eso, hay que agarrar un recipiente horno y colocar la harina, la levadura y el aceite de oliva y empezar a batir hasta que sea una masa viscosa e uniforme.
+4.- Una vez que la masa tenga consistencia, hay que amazar la masa hasta que tenga forma.
+5.- Poner la masa en refrigerador por medio dia (al menos)
+6.- Después de que haya pasado el tiempo, sacamos la masa del refrigerador y amazamos nuevamente para conseguir la forma deseada de la pizza.
+7.- Al mismo tiempo, hay que precalentar el horno por media hora a 250 C°.
+8.- Colocar en la masa, la salsa de tomate de manera uniforme, a continuación, colocaremos el queso arriba de la salsa, para luego colocar los pepperonis arriba del queso, para que quede con esta estructura.
+Masa + Salsa + Queso + Pepperono
+9.- Preparamos la bandeja espolvoreando harina en esta
+9.- Colocamos la pizza en la bandeja, abrimos el horno, ponemos la bandeja con la pizza en el horno, cerramos el horno, luego de esperar entre quince a veinte minutos, abrimos el horno, sacamos la baneja con la pizza (con guantes para evitar quemarnos), y cerramos el horno. De esta forma, la pizza esta lista para servir.  
