@@ -61,6 +61,10 @@ class App:
         self.hold(self.Q1, self.continueMsg)
         pass
 
+    def exit(self):
+        print("Gracias por participar en la prueba de Katz.")
+        pass
+
     def Q1(self):
         print("Al bañarse ¿Usted recibe alguna ayuda?\n A) No recibo ninguna ayuda\n B)Recibo ayuda en una parte del cuerpo\n C)Recibo ayuda en todo el cuerpo\n D)No me baño")
         while True:
