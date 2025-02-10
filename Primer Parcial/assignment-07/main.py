@@ -48,7 +48,6 @@ class Aplicacion:
         if input != None:
             print("Por favor, ingrese su nombre.")
             self.nombre = input(">>> ")
-            self.mostrar_menu()
         pass
 
     def mostrar_menu(self):
@@ -56,7 +55,6 @@ class Aplicacion:
         for i, (producto, precio) in enumerate(self.menu.items(), start=1):
             print(f"[{i}] | {producto}: ${precio}")
         print("Por favor, ¿digame qué le gustaría ordernar?")
-        self.ordenar()
         pass
 
     def ordenar(self):
@@ -86,7 +84,6 @@ class Aplicacion:
                 break
             else:
                 self.mostrar_menu()
-        self.terminar_pedido()
         pass
 
     def terminar_pedido(self):
@@ -98,9 +95,12 @@ class Aplicacion:
             total += precio * cantidad
             print(f"${precio * cantidad}    | {producto} x{cantidad}")
         print(f"Total: ${total}")
-        print("Le agradecemos de parte de Taco-mer! ¡Muchas gracias, vuelva pronto!")
+        print("¡Le agradecemos de parte de Taco-mer! ¡Muchas gracias, vuelva pronto!")
         exit()
 
 if __name__ == "__main__":
     app = Aplicacion()
     app.bienvenida()
+    app.mostrar_menu()
+    app.ordenar()
+    app.terminar_pedido()
