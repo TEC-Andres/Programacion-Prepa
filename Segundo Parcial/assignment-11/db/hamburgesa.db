@@ -1,0 +1,23 @@
+Mesa |   Max Ocupacion |  Reservada
+1    |   5             |   Si
+2    |   5             |   Si
+3    |   6             |   Si
+4    |   7             |   No
+5    |   7             |   No
+6    |   3             |   No
+7    |   3             |   Si
+8    |   4             |   Si
+9    |   5             |   No
+10   |   6             |   No
+11   |   4             |   Si
+12   |   5             |   Si
+13   |   5             |   Si
+14   |   6             |   Si
+15   |   7             |   No
+16   |   7             |   Si
+17   |   3             |   No
+18   |   3             |   Si
+19   |   4             |   Si
+20   |   5             |   Si
+21   |   6             |   No
+22   |   4             |   Si
