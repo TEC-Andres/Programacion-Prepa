@@ -1,10 +1,10 @@
 '''
-#       Sesión 11: Assignment 11.2
+#       Sesión 11: Assignment 11
 #       Andrés Rodríguez Cantú ─ A01287002
 #
 #       Copyright (C) Tecnológico de Monterrey
 #
-#       Archivo: main2.py
+#       Archivo: main.py
 #
 #       Creado:                   24/02/2024
 #       Última Modificación:      26/02/2024
@@ -14,9 +14,6 @@ import os
 class Path():
     def __init__(self):
         pass
-
-    def clear_screen(self):
-        os.system('cls' if os.name == 'nt' else 'clear')
 
     def abrir(self, file_path, cantidad_de_filas=10):
         base_dir = os.path.join(os.path.dirname(__file__), 'db')
@@ -29,11 +26,8 @@ class Path():
             with open(full_path, 'r') as file:
                 content = file.readlines()
                 total_filas = len(content)
-                header = content[0]  # Get the header row
-                i = 1  # Start from the first data row
+                i = 0
                 while True:
-                    self.clear_screen()
-                    print(header)  # Print the header row
                     print(''.join(content[i:i+cantidad_de_filas]))
                     if i + cantidad_de_filas < total_filas:
                         user_input = input("Presiona  'a' para agregar una nueva fila, 'e' para editar, 'i' para ir al numero de fila, 'b' para regresar, o 'enter' para reiniciar:\n>>> ")
@@ -45,31 +39,31 @@ class Path():
                             with open(full_path, 'r') as file:
                                 content[:] = file.readlines()
                         elif user_input.lower() == 'e':
-                            self.columna_edit(file_path, content)
+                            self.manejo_del_edit(file_path, content)
                         elif user_input.lower() == 'i':
                             fila = int(input("Pon el número de fila:\n>>> "))
                             i = fila
                         elif user_input.lower() == 'b':
-                            i = max(1, i - cantidad_de_filas)  # Ensure we don't go before the first data row
+                            i = max(0, i - cantidad_de_filas)
                         else:
                             i += cantidad_de_filas
                             if i >= total_filas:
-                                i = 1  # Reset to the first data row
+                                i = 0
                     else:
                         user_input = input("Fin de la base de datos. Presiona 'e' para editar, 'i' para ir al numero de fila, 'b' para regresar, o 'enter' para reiniciar:\n>>> ")
                         if user_input.lower() == 'e':
-                            self.columna_edit(file_path, content)
+                            self.manejo_del_edit(file_path, content)
                         elif user_input.lower() == 'i':
                             fila = int(input("Pon el número de fila:\n>>> "))
                             i = fila
                         elif user_input.lower() == 'b':
-                            i = max(1, i - cantidad_de_filas)  # Ensure we don't go before the first data row
+                            i = max(0, i - cantidad_de_filas)
                         else:
-                            i = 1  # Reset to the first data row
+                            i = 0
         except Exception as e:
             print(f"An error occurred: {e}")
 
-    def columna_edit(self, file_path, content):
+    def manejo_del_edit(self, file_path, content):
         fila = int(input("Pon el número de columna: "))
         new_value = input("Pon el nuevo valor: ")
         self.editar(file_path, fila, new_value)
@@ -122,17 +116,10 @@ class Path():
             print(f"The file {full_path} does not exist.")
             return
         try:
-            with open(full_path, 'r') as file:
-                content = file.readlines()
-                first_row = content[0].strip().split('|')
-                last_row = content[-1].strip().split('|')
-                new_index = str(int(last_row[0].strip()) + 1)  # Calculate the new index
-            
             columnas = nueva_fila.split('|')
             if len(columnas) < 3:
                 print("Un error sucedio, no hay suficientes filas'|'.")
                 return
-            columnas[0] = f'{new_index}   '  # Set the new index
             columnas[1] = input("Pon la cantidad de personas maximas que pueden usar la mesa\n>>> ")
             columnas[1] = f'   {columnas[1]}             '
             columnas[2] = input("¿La mesa esta disponible? (Si/No)\n>>> ")

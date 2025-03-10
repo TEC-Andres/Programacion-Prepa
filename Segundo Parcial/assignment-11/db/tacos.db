@@ -18,7 +18,7 @@ Mesa |   Max Ocupacion |  Reservada
 17   |   6             |   No
 18   |   5             |   Si
 19   |   7             |   Si
-20   |   3             |   Si
+20   |   3             |   No
 21   |   4             |   No
 22   |   6             |   Si
 23   |   5             |   Si
@@ -49,3 +49,8 @@ Mesa |   Max Ocupacion |  Reservada
 48   |   5             |   Si
 49   |   7             |   No
 50   |   3             |   Si
+51   |   8             |   No
+52   |   2             |   Si
+53   |   5             |   Si
+54   |   8             |   Si
+55   |   6             |   Si
