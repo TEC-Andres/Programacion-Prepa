@@ -49,6 +49,7 @@ class FG:
     H555555 = CustomColor("#555555").color_code # Gray
     H55FF55 = CustomColor("#55FF55").color_code # Light Green
     H5555FF = CustomColor("#5555FF").color_code # Light Blue
+    H888888 = CustomColor("#888888").color_code # Dusk Gray
     HAAAAAA = CustomColor("#AAAAAA").color_code # Light Gray
     HFFFFFF = CustomColor("#FFFFFF").color_code # White
     HFF0000 = CustomColor("#FF0000").color_code # Red

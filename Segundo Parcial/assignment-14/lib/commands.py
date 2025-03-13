@@ -21,9 +21,9 @@ class Cmd:
         print(f"{Style.BRIGHT + FG.H5555FF}[{FG.RESET + FG.H00AAAA}INFO{FG.RESET + Style.BRIGHT + FG.H5555FF}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} Para ver la lista de comandos, escriba help en la consola.{FG.RESET + Style.RESET_ALL}")
 
     def help(self):
-        print(f"{Style.BRIGHT + FG.H555555}[{FG.RESET + FG.HAAAAAA}CONSOLA{FG.RESET + Style.BRIGHT + FG.H555555}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} Estos son los comandos que hay en la aplicación:{FG.RESET + Style.RESET_ALL}")
+        print(f"{Style.BRIGHT + FG.H443A3B}[{FG.RESET + FG.HAAAAAA}CONSOLA{FG.RESET + Style.BRIGHT + FG.H443A3B}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} Estos son los comandos que hay en la aplicación:{FG.RESET + Style.RESET_ALL}")
         for command, description in Dict().help_messages.items():
-            print(f"{checkInfo(command, FG.H00AA00)}: {description}")
+            print(f"    {checkInfo(command, FG.H00AAAA)} {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} {description}")
     
     def exit(self):
         print(f"{Style.BRIGHT + FG.H5555FF}[{FG.RESET + FG.H00AAAA}INFO{FG.RESET + Style.BRIGHT + FG.H5555FF}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} Programa cerrado con éxito.{FG.RESET + Style.RESET_ALL}")
