@@ -10,7 +10,7 @@
 #       Última Modificación:      13/03/2024
 '''
 import os
-from lib.commands import cmd as cmd
+from lib.commands import Cmd as cmd
 import pandas as pd
 
 class Main:
@@ -22,4 +22,8 @@ class Main:
 if __name__ == "__main__":
     main = Main()
     while True:
-        input(">> ")
+        comando = input(">> ")
+        try:
+            getattr(cmd, comando)(main)
+        except AttributeError:
+            print(f"El comando '{comando}' no existe. Favor de revisar la ortografía o checar la lista de comandos con 'help'.")
