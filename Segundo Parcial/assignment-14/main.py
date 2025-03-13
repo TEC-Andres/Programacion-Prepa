@@ -24,6 +24,9 @@ if __name__ == "__main__":
     while True:
         comando = input(">> ")
         try:
-            getattr(cmd, comando)(main)
+            parts = comando.split()
+            comando_name = parts[0]
+            args = parts[1:]
+            getattr(cmd, comando_name)(main, *args)
         except AttributeError:
             print(f"El comando '{comando}' no existe. Favor de revisar la ortografía o checar la lista de comandos con 'help'.")
