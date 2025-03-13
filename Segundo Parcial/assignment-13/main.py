@@ -40,8 +40,8 @@ class Main:
         row = self.df[self.df.iloc[:, 3] == person]
         if row.empty:
             return "No se halló a la persona"
-        total = len(self.df.columns) - 4
-        attended = (row.iloc[0, 4:] == "X").sum()
+        total = len(self.df.columns) - 9
+        attended = (row.iloc[0, 9:] == "X").sum()
         percentage = (attended / total) * 100 if total > 0 else 0
         return f"{person} tiene un porcentaje de asistencia del {percentage:.2f}%"
 
