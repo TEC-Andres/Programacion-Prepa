@@ -1,13 +1,14 @@
 '''
-#       Sesión 12: Assignment 12
+#       Sesión 14: Proyecto Parcial 2
 #       Andrés Rodríguez Cantú ─ A01287002
-#
+#       Roberto André Guevara Martínez ─ A01287324
+#       Víctor Manuel Sánchez Chávez ─ A01287522
 #       Copyright (C) Tecnológico de Monterrey
 #
 #       Archivo: lib/color.py
 #
-#       Creado:                   28/02/2024
-#       Última Modificación:      09/03/2024
+#       Creado:                   13/03/2024
+#       Última Modificación:      13/03/2024
 '''
 class CustomColor:
     def __init__(self, hex_color):
@@ -75,6 +76,8 @@ class checkInfo:
         return f"{self.color}{self.message}{FG.RESET + Style.RESET_ALL}"
 
 ''' 
+Ejemplos
+
 print(f"{Style.BRIGHT + FG.H00AA00}[{FG.RESET + FG.H55FF55}SUCCESS{FG.RESET + Style.BRIGHT + FG.H00AA00}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} All 20 tests passed!{FG.RESET + Style.RESET_ALL}")
 print(f"{Style.BRIGHT + FG.HFF0000}[{FG.RESET + FG.HFF5555}ERROR{FG.RESET + Style.BRIGHT + FG.HFF0000}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} An error occurred: Division by zero.{FG.RESET + Style.RESET_ALL}")
 print(f"{Style.BRIGHT + FG.H5555FF}[{FG.RESET + FG.H00AAAA}INFO{FG.RESET + Style.BRIGHT + FG.H5555FF}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} Queued all 20 commits.{FG.RESET + Style.RESET_ALL}")
