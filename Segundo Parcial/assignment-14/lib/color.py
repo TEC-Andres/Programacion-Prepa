@@ -1,14 +1,16 @@
 '''
 #       Sesión 14: Proyecto Parcial 2
+#       Fernando Chávez Nolasco ─ A01284698
 #       Andrés Rodríguez Cantú ─ A01287002
 #       Roberto André Guevara Martínez ─ A01287324
 #       Víctor Manuel Sánchez Chávez ─ A01287522
+#       
 #       Copyright (C) Tecnológico de Monterrey
 #
 #       Archivo: lib/color.py
 #
 #       Creado:                   13/03/2024
-#       Última Modificación:      13/03/2024
+#       Última Modificación:      14/03/2024
 '''
 class CustomColor:
     def __init__(self, hex_color):
@@ -38,6 +40,7 @@ class FG:
     H555555 = CustomColor("#555555").color_code # Gray
     H55FF55 = CustomColor("#55FF55").color_code # Light Green
     H5555FF = CustomColor("#5555FF").color_code # Light Blue
+    H848484 = CustomColor("#848484").color_code # CMD Gray
     H888888 = CustomColor("#888888").color_code # Dusk Gray
     HAAAAAA = CustomColor("#AAAAAA").color_code # Light Gray
     HFFFFFF = CustomColor("#FFFFFF").color_code # White

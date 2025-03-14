@@ -1,15 +1,16 @@
 '''
 #       Sesión 14: Proyecto Parcial 2
+#       Fernando Chávez Nolasco ─ A01284698
 #       Andrés Rodríguez Cantú ─ A01287002
 #       Roberto André Guevara Martínez ─ A01287324
-#       
+#       Víctor Manuel Sánchez Chávez ─ A01287522
 #       
 #       Copyright (C) Tecnológico de Monterrey
 #
 #       Archivo: main.py
 #
 #       Creado:                   13/03/2024
-#       Última Modificación:      13/03/2024
+#       Última Modificación:      14/03/2024
 '''
 import os
 from lib.commands import cmd
