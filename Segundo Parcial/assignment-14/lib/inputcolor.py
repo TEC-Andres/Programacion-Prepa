@@ -7,7 +7,7 @@
 #       
 #       Copyright (C) Tecnológico de Monterrey
 #
-#       Archivo: lib/inputcolor.py
+#       Archivo: lib/InputColor.py
 #
 #       Creado:                   13/03/2024
 #       Última Modificación:      14/03/2024
@@ -164,7 +164,7 @@ class InputColor:
         else:
             color_map = {
                 "salir": FG.H00AAAA,
-                "cls": FG.HFFFF00
+                #"cls": FG.H00AAAA
             }
             words = self.user_input.split()
             colored_input = self.user_input

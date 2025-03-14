@@ -43,11 +43,12 @@ class FG:
     H848484 = CustomColor("#848484").color_code # CMD Gray
     H888888 = CustomColor("#888888").color_code # Dusk Gray
     HAAAAAA = CustomColor("#AAAAAA").color_code # Light Gray
-    HFFFFFF = CustomColor("#FFFFFF").color_code # White
     HFF0000 = CustomColor("#FF0000").color_code # Red
     HFF5555 = CustomColor("#FF5555").color_code # Light Red
     HFFA500 = CustomColor("#FFA500").color_code # Orange
     HFFFF00 = CustomColor("#FFFF00").color_code # Yellow
+    HFFFFFF = CustomColor("#FFFFFF").color_code # White
+
 
     RESET = '\033[39m'
     

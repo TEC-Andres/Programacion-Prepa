@@ -20,7 +20,7 @@ class Dict(dict):
     mensajes_ayuda = {
         'ayuda': {
             'description': 'Muestra la lista de comandos disponibles.',
-            'syntax': 'ayuda [-descripcion|-sintaxis]'
+            'syntax': 'ayuda [-descripcion|-sintaxis|<comando>] '
         },
         'cls': {
             'description': 'Limpia la consola.',
@@ -30,9 +30,9 @@ class Dict(dict):
             'description': 'Muestra el archivo actual.',
             'syntax': 'db'
         },
-        'exit': {
+        'salir': {
             'description': 'Cierra el programa.',
-            'syntax': 'exit'
+            'syntax': 'salir'
         },
         'libro': {
             'description': 'Reserva/Devuelve un libro',
@@ -46,8 +46,8 @@ class cmd:
 
     def init(self):
         print(f"{Style.BRIGHT + FG.H5555FF}[{FG.RESET + FG.H00AAAA}INFO{FG.RESET + Style.BRIGHT + FG.H5555FF}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} Iniciando el programa.{FG.RESET + Style.RESET_ALL}")
+        print(f"{Style.BRIGHT + FG.H5555FF}[{FG.RESET + FG.H00AAAA}INFO{FG.RESET + Style.BRIGHT + FG.H5555FF}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} Conenctando a la base de datos: {FG.H00AA00 + os.path.basename(self.file_path) + FG.RESET}.{FG.RESET + Style.RESET_ALL}")
         print(f"{Style.BRIGHT + FG.H5555FF}[{FG.RESET + FG.H00AAAA}INFO{FG.RESET + Style.BRIGHT + FG.H5555FF}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} Para ver la lista de comandos, escriba 'ayuda' en la consola.{FG.RESET + Style.RESET_ALL}")
-
     def ayuda(self, *args):
         if not args:
             print(f"{Style.BRIGHT + FG.H443A3B}[{FG.RESET + FG.HAAAAAA}CONSOLA{FG.RESET + Style.BRIGHT + FG.H443A3B}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} Use 'ayuda -descripcion' o 'ayuda -sintaxis' para más detalles.{FG.RESET + Style.RESET_ALL}")
@@ -62,7 +62,11 @@ class cmd:
             print(f"{Style.BRIGHT + FG.H443A3B}[{FG.RESET + FG.HAAAAAA}CONSOLA{FG.RESET + Style.BRIGHT + FG.H443A3B}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} Sintaxis de comandos:{FG.RESET + Style.RESET_ALL}")
             for command, info in Dict.mensajes_ayuda.items():
                 print(f"	{checkInfo(command, FG.H00AAAA)}{FG.RESET + FG.H443A3B}	―{FG.RESET + Style.RESET_ALL} {info['syntax']}")
-
+        elif args[0] in Dict.mensajes_ayuda:
+            command = args[0]
+            print(f"{Style.BRIGHT + FG.H443A3B}[{FG.RESET + FG.HAAAAAA}CONSOLA{FG.RESET + Style.BRIGHT + FG.H443A3B}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} {command}:{FG.RESET + Style.RESET_ALL}")
+            print(f"	Descripción: {Dict.mensajes_ayuda[command]['description']}")
+            print(f"	Sintaxis: {Dict.mensajes_ayuda[command]['syntax']}")
         else:
             print(f"{Style.BRIGHT + FG.H443A3B}[{FG.RESET + FG.HAAAAAA}CONSOLA{FG.RESET + Style.BRIGHT + FG.H443A3B}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} Opción inválida. Use '-descripcion' o '-sintaxis'.{FG.RESET + Style.RESET_ALL}")
 

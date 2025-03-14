@@ -39,6 +39,6 @@ if __name__ == "__main__":
             print(f"El comando '{comando}' no existe. Favor de revisar la ortografía o checar la lista de comandos con 'help'.")
         except KeyboardInterrupt:
             print()
-            cmd.exit(main)
+            cmd.salir(main)
         except Exception as e:
             print(f"Error: {e}") 
