@@ -12,8 +12,9 @@
 #       Última Modificación:      13/03/2024
 '''
 import os
-from lib.commands import Cmd as cmd
+from lib.commands import cmd
 import pandas as pd
+from lib.inputcolor import InputColor
 
 class Main:
     def __init__(self):
@@ -23,9 +24,12 @@ class Main:
 
 if __name__ == "__main__":
     main = Main()
+    input_color = InputColor(">> ")
     while True:
-        comando = input(">> ")
         try:
+            comando = input_color.start_input().strip()
+            if not comando:
+                continue
             parts = comando.split()
             comando_name = parts[0]
             args = parts[1:]
@@ -33,4 +37,7 @@ if __name__ == "__main__":
         except AttributeError:
             print(f"El comando '{comando}' no existe. Favor de revisar la ortografía o checar la lista de comandos con 'help'.")
         except KeyboardInterrupt:
-            print("\nSe ha interrumpido la ejecución del programa.")
+            print()
+            cmd.exit(main)
+        except Exception as e:
+            print(f"Error: {e}") 

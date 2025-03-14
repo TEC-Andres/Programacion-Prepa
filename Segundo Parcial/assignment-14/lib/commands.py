@@ -20,10 +20,11 @@ class Dict(dict):
         self.help_messages = {
             'help': 'Muestra la lista de comandos disponibles.',
             'cls': 'Limpia la consola.',
-            'exit': 'Cierra el programa.'
+            'exit': 'Cierra el programa.',
+            'libro': 'Reserva/Devuelve un libro'
         }
 
-class Cmd:
+class cmd:
     def __init__(self):
         pass
 

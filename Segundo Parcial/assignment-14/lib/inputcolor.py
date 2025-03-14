@@ -11,7 +11,7 @@
 '''
 import sys
 import msvcrt
-from color import FG, Style
+from lib.color import FG, Style
 
 class InputColor:
     def __init__(self, prompt="Escribe algo: "):
@@ -41,29 +41,29 @@ class InputColor:
                 self._update_display()
 
         print()  # Move to next line after input
-        return self.user_input
+        user_input = self.user_input  # Store the user input
+        self.user_input = ""  # Clear the input for the next command
+        return user_input
 
     def _update_display(self):
-        # Choose colored input if exactly 'test', else use uncolored input
-        if self.user_input == "exit":
-            colored_input = f"{FG.H00AAAA}{self.user_input}{Style.RESET_ALL}"
+        color_map = {
+            "exit": FG.H00AAAA,
+            "cls": FG.HFFFF00,
+            "help": FG.HFFFF00
+        }
+
+        words = self.user_input.split()
+        if words and words[0] in color_map:
+            colored_input = f"{color_map[words[0]]}{self.user_input}{Style.RESET_ALL}"
         else:
-            colored_input = self.user_input
+            if words:
+                first_word_colored = f"{FG.HFFFF00}{words[0]}{Style.RESET_ALL}"
+                colored_input = first_word_colored + self.user_input[len(words[0]):]
+            else:
+                colored_input = self.user_input
 
         colored_line = self.prompt + colored_input
         # \033[K clears from the cursor to the end of line,
         # ensuring no extra characters remain from previous longer output.
         sys.stdout.write("\r" + colored_line + "\033[K")
         sys.stdout.flush()
-
-'''if __name__ == "__main__":
-    try:
-        inputColor = InputColor()
-        while True:
-            final_text = inputColor.start_input()
-            print(f"You entered: {final_text}") 
-            if final_text == "exit":
-                break
-    except KeyboardInterrupt:
-        print("\nKeyboardInterrupt detected. Exiting.")
-'''

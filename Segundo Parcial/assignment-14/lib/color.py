@@ -31,18 +31,6 @@ class FG:
                 cls._colors[hex_color] = CustomColor(hex_color).color_code
             return cls._colors[hex_color]
         raise AttributeError(f"type object '{cls.__name__}' has no attribute '{name}'")
-    
-    class FG:
-        _colors = {}
-    
-        @classmethod
-        def __getattr__(cls, name):
-            if name.startswith('H') and len(name) == 7:
-                hex_color = '#' + name[1:]
-                if hex_color not in cls._colors:
-                    cls._colors[hex_color] = CustomColor(hex_color).color_code
-                return cls._colors[hex_color]
-            raise AttributeError(f"type object '{cls.__name__}' has no attribute '{name}'")
 
     H00AA00 = CustomColor("#00AA00").color_code # Green
     H00AAAA = CustomColor("#00AAAA").color_code # Lapis Lazuli Blue
@@ -57,7 +45,6 @@ class FG:
     HFF5555 = CustomColor("#FF5555").color_code # Light Red
     HFFA500 = CustomColor("#FFA500").color_code # Orange
     HFFFF00 = CustomColor("#FFFF00").color_code # Yellow
-
 
     RESET = '\033[39m'
     
