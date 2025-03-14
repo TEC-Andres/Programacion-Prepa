@@ -2,6 +2,8 @@
 #       Sesión 14: Proyecto Parcial 2
 #       Andrés Rodríguez Cantú ─ A01287002
 #       Roberto André Guevara Martínez ─ A01287324
+#       
+#       
 #       Copyright (C) Tecnológico de Monterrey
 #
 #       Archivo: main.py
@@ -30,3 +32,5 @@ if __name__ == "__main__":
             getattr(cmd, comando_name)(main, *args)
         except AttributeError:
             print(f"El comando '{comando}' no existe. Favor de revisar la ortografía o checar la lista de comandos con 'help'.")
+        except KeyboardInterrupt:
+            print("\nSe ha interrumpido la ejecución del programa.")
