@@ -48,9 +48,10 @@ class cmd:
         print(f"{Style.BRIGHT + FG.H5555FF}[{FG.RESET + FG.H00AAAA}INFO{FG.RESET + Style.BRIGHT + FG.H5555FF}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} Iniciando el programa.{FG.RESET + Style.RESET_ALL}")
         print(f"{Style.BRIGHT + FG.H5555FF}[{FG.RESET + FG.H00AAAA}INFO{FG.RESET + Style.BRIGHT + FG.H5555FF}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} Conenctando a la base de datos: {FG.H00AA00 + os.path.basename(self.file_path) + FG.RESET}.{FG.RESET + Style.RESET_ALL}")
         print(f"{Style.BRIGHT + FG.H5555FF}[{FG.RESET + FG.H00AAAA}INFO{FG.RESET + Style.BRIGHT + FG.H5555FF}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} Para ver la lista de comandos, escriba 'ayuda' en la consola.{FG.RESET + Style.RESET_ALL}")
+
     def ayuda(self, *args):
         if not args:
-            print(f"{Style.BRIGHT + FG.H443A3B}[{FG.RESET + FG.HAAAAAA}CONSOLA{FG.RESET + Style.BRIGHT + FG.H443A3B}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} Use 'ayuda -descripcion' o 'ayuda -sintaxis' para más detalles.{FG.RESET + Style.RESET_ALL}")
+            print(f"{Style.BRIGHT + FG.H443A3B}[{FG.RESET + FG.HAAAAAA}CONSOLA{FG.RESET + Style.BRIGHT + FG.H443A3B}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} Modulo de ayuda\n{Style.BRIGHT + FG.H0000FF}Para descripciones:{FG.RESET+ Style.RESET_ALL}	Use '{FG.HFFFF00}ayuda {FG.RESET + FG.H848484}-descripcion{FG.RESET + Style.RESET_ALL}' para acceder a las descripciones de los comandos\n{Style.BRIGHT + FG.H0000FF}Para sintaxis:{FG.RESET+ Style.RESET_ALL}		Use '{FG.HFFFF00}ayuda {FG.RESET + FG.H848484}-sintaxis{FG.RESET + Style.RESET_ALL}' para aprender el uso de la sintaxis del programa.{FG.RESET + Style.RESET_ALL}\n{Style.BRIGHT + FG.H0000FF}Para comandos:{FG.RESET+ Style.RESET_ALL}		Use '{FG.HFFFF00}ayuda {FG.RESET + FG.H848484}<comandos>{FG.RESET + Style.RESET_ALL}' para ver el uso junto a la sintaxis de un comando especifico.{FG.RESET + Style.RESET_ALL}")
             return
 
         if '-descripcion' in args:
