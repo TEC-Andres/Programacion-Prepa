@@ -26,10 +26,6 @@ class Dict(dict):
             'description': 'Limpia la consola.',
             'syntax': 'cls'
         },
-        'db': {
-            'description': 'Muestra el archivo actual.',
-            'syntax': 'db'
-        },
         'salir': {
             'description': 'Cierra el programa.',
             'syntax': 'salir'
