@@ -16,11 +16,11 @@ import os
 from lib.commands import cmd
 import pandas as pd
 from lib.inputcolor import InputColor
+from dotenv import load_dotenv
 
+load_dotenv()
 class Main:
     def __init__(self):
-        self.file_path_db = os.path.join(os.path.dirname(__file__), 'db\\books.xlsx')
-        self.file_path_register = os.path.join(os.path.dirname(__file__), 'db\\registro.xlsx')
         cmd.init(self)
 
 if __name__ == "__main__":

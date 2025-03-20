@@ -70,7 +70,7 @@ class checkInfo:
 ''' 
 Ejemplos
 
-print(f"{Style.BRIGHT + FG.H00AA00}[{FG.RESET + FG.H55FF55}SUCCESS{FG.RESET + Style.BRIGHT + FG.H00AA00}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} All 20 tests passed!{FG.RESET + Style.RESET_ALL}")
+print(f"{Style.BRIGHT + FG.H00AA00}[{FG.RESET + FG.H55FF55}ÉXITO{FG.RESET + Style.BRIGHT + FG.H00AA00}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} All 20 tests passed!{FG.RESET + Style.RESET_ALL}")
 print(f"{Style.BRIGHT + FG.HFF0000}[{FG.RESET + FG.HFF5555}ERROR{FG.RESET + Style.BRIGHT + FG.HFF0000}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} An error occurred: Division by zero.{FG.RESET + Style.RESET_ALL}")
 print(f"{Style.BRIGHT + FG.H5555FF}[{FG.RESET + FG.H00AAAA}INFO{FG.RESET + Style.BRIGHT + FG.H5555FF}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} Queued all 20 commits.{FG.RESET + Style.RESET_ALL}")
 print(f"{Style.BRIGHT + FG.HFFA500}[{FG.RESET + FG.HFFFF00}WARNING{FG.RESET + Style.BRIGHT + FG.HFFA500}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} You are about to delete all files.{FG.RESET + Style.RESET_ALL}")
