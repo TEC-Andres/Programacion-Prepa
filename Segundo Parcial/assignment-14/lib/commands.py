@@ -17,6 +17,7 @@ import sys
 import pandas as pd
 from lib.color import FG, Style, checkInfo
 from dotenv import load_dotenv
+from datetime import datetime
 
 load_dotenv()
 class Dict(dict):
@@ -37,10 +38,6 @@ class Dict(dict):
             'description': 'Imprime a la consola los primeros 10 elementos de la base de datos.',
             'syntax': 'db [int:hoja] [str:base_de_datos]'
         },
-        'salir': {
-            'description': 'Cierra el programa.',
-            'syntax': 'salir'
-        },
         'operacion': {
             'description': 'Reserva/Devuelve un libro',
             'syntax': 'operacion [-reservar|-devolver] <str:nombre_libro>'
@@ -48,6 +45,10 @@ class Dict(dict):
         'registro': {
             'description': 'Muestra el registro de rentas.',
             'syntax': 'registro [int:hoja] [str:base_de_datos]'
+        },
+        'salir': {
+            'description': 'Cierra el programa.',
+            'syntax': 'salir'
         }
     }
 
@@ -135,7 +136,7 @@ class cmd:
             base_de_datos = f"db\\{args[1]}.xlsx" if len(args) > 1 else os.getenv('PATH_DB')
 
             if not os.path.exists(base_de_datos):
-                print(f"{Style.BRIGHT + FG.HFF0000}[{FG.RESET + FG.HFF5555}ERROR{FG.RESET + Style.BRIGHT + FG.HFF0000}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} La base de datos '{base_de_datos}' no existe.{FG.RESET + Style.RESET_ALL}")
+                print(f"{Style.BRIGHT + FG.HFF0000}[{FG.RESET + FG.HFF5555}ERROR{FG.RESET + FG.HFF0000}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} La base de datos '{base_de_datos}' no existe.{FG.RESET + Style.RESET_ALL}")
                 return
 
             try:
@@ -153,7 +154,7 @@ class cmd:
                 total_pages = (total_rows + page_size - 1) // page_size  # Calcular páginas totales
 
                 if page < 1 or page > total_pages:
-                    print(f"{Style.BRIGHT + FG.HFF0000}[{FG.RESET + FG.HFF5555}ERROR{FG.RESET + Style.BRIGHT + FG.HFF0000}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} Página inválida. Hay {total_pages} páginas disponibles.{FG.RESET + Style.RESET_ALL}")
+                    print(f"{Style.BRIGHT + FG.HFF0000}[{FG.RESET + FG.HFF5555}ERROR{FG.RESET + FG.HFF0000}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} Página inválida. Hay {total_pages} páginas disponibles.{FG.RESET + Style.RESET_ALL}")
                     return
 
                 start_row = (page - 1) * page_size
@@ -169,7 +170,7 @@ class cmd:
     # operacion [-reservar|-devolver] <str:nombre_libro>
     def operacion(self, *args):
         if len(args) < 2:
-            print(f"{Style.BRIGHT + FG.HFF0000}[{FG.RESET + FG.HFF5555}ERROR{FG.RESET + Style.BRIGHT + FG.HFF0000}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} Error de sintaxis, recuerda que así se tiene que ver tu comando: operacion [-reservar|-devolver] \"<str:nombre_libro>\"{FG.RESET + Style.RESET_ALL}")
+            print(f"{Style.BRIGHT + FG.HFF0000}[{FG.RESET + FG.HFF5555}ERROR{FG.RESET + FG.HFF0000}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} Error de sintaxis, recuerda que así se tiene que ver tu comando: operacion [-reservar|-devolver] \"<str:nombre_libro>\"{FG.RESET + Style.RESET_ALL}")
             return
 
         action = args[0]
@@ -182,6 +183,7 @@ class cmd:
         try:
             # Load the database
             db_path = os.getenv('PATH_DB')
+            db_register = os.getenv('PATH_REGISTER')
             if not os.path.exists(db_path):
                 print(f"{Style.BRIGHT + FG.HFF0000}[{FG.RESET + FG.HFF5555}ERROR{FG.RESET + FG.HFF0000}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} La base de datos '{db_path}' no existe.{FG.RESET + Style.RESET_ALL}")
                 return
@@ -213,16 +215,35 @@ class cmd:
                     print(f"{Style.BRIGHT + FG.H00AA00}[{FG.RESET + FG.H55FF55}ÉXITO{FG.RESET + Style.BRIGHT + FG.H00AA00}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} ¡El libro '{book_name}' ha sido reservado!{FG.RESET + Style.RESET_ALL}")
                 else:
                     print(f"{Style.BRIGHT + FG.HFF0000}[{FG.RESET + FG.HFF5555}ERROR{FG.RESET + FG.HFF0000}] {FG.RESET}El libro '{book_name}' ya está reservado.{Style.RESET_ALL}")
+                    return
             elif action == '-devolver':
                 if status_value == 'Reservado':
                     df.at[book_row.index[0], df.columns[4]] = 'Disponible'
                     print(f"{Style.BRIGHT + FG.H00AA00}[{FG.RESET + FG.H55FF55}ÉXITO{FG.RESET + Style.BRIGHT + FG.H00AA00}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} ¡El libro '{book_name}' ha sido devuelto!{FG.RESET + Style.RESET_ALL}")
                 else:
                     print(f"{Style.BRIGHT + FG.HFF0000}[{FG.RESET + FG.HFF5555}ERROR{FG.RESET + FG.HFF0000}] {FG.RESET}El libro '{book_name}' no se encuentra reservado.{Style.RESET_ALL}")
+                    return
     
             # Save the updated database
             with pd.ExcelWriter(db_path, engine='openpyxl') as writer:
                 df.to_excel(writer, sheet_name=sheet_name, index=False)
+
+            # Update the db_register file
+            if os.path.exists(db_register):
+                register_data = pd.read_excel(db_register)
+                new_row = pd.DataFrame({
+                    register_data.columns[0]: [register_data.iloc[0, 0] + 1],  # Increment ID
+                    register_data.columns[1]: [datetime.now().strftime('%Y-%m-%d %H:%M')],  # Current date
+                    register_data.columns[2]: ['Reservacion' if action == '-reservar' else 'Devolucion'],  # Action
+                    register_data.columns[3]: [book_name],  # Book title
+                    register_data.columns[4]: [book_row.iloc[0, 2]],  # Author
+                    register_data.columns[5]: [book_row.iloc[0, 3]]   # Category
+                })
+                register_data = pd.concat([new_row, register_data], ignore_index=True)
+                with pd.ExcelWriter(db_register, engine='openpyxl') as writer:
+                    register_data.to_excel(writer, index=False)
+            else:
+                print(f"{Style.BRIGHT + FG.HFF0000}[{FG.RESET + FG.HFF5555}ERROR{FG.RESET + FG.HFF0000}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} El archivo de registro '{db_register}' no existe.{FG.RESET + Style.RESET_ALL}")
 
         except Exception as e:
             print(f"{Style.BRIGHT + FG.HFF0000}[{FG.RESET + FG.HFF5555}ERROR{FG.RESET + FG.HFF0000}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} Error al procesar la acción: {str(e)}{FG.RESET + Style.RESET_ALL}")
@@ -237,7 +258,7 @@ class cmd:
             base_de_datos = f"db\\{args[1]}.xlsx" if len(args) > 1 else os.getenv('PATH_REGISTER')
 
             if not os.path.exists(base_de_datos):
-                print(f"{Style.BRIGHT + FG.HFF0000}[{FG.RESET + FG.HFF5555}ERROR{FG.RESET + Style.BRIGHT + FG.HFF0000}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} La base de datos '{base_de_datos}' no existe.{FG.RESET + Style.RESET_ALL}")
+                print(f"{Style.BRIGHT + FG.HFF0000}[{FG.RESET + FG.HFF5555}ERROR{FG.RESET + FG.HFF0000}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} La base de datos '{base_de_datos}' no existe.{FG.RESET + Style.RESET_ALL}")
                 return
 
             try:
@@ -255,7 +276,7 @@ class cmd:
                 total_pages = (total_rows + page_size - 1) // page_size  # Calcular páginas totales
 
                 if page < 1 or page > total_pages:
-                    print(f"{Style.BRIGHT + FG.HFF0000}[{FG.RESET + FG.HFF5555}ERROR{FG.RESET + Style.BRIGHT + FG.HFF0000}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} Página inválida. Hay {total_pages} páginas disponibles.{FG.RESET + Style.RESET_ALL}")
+                    print(f"{Style.BRIGHT + FG.HFF0000}[{FG.RESET + FG.HFF5555}ERROR{FG.RESET + FG.HFF0000}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} Página inválida. Hay {total_pages} páginas disponibles.{FG.RESET + Style.RESET_ALL}")
                     return
 
                 start_row = (page - 1) * page_size
