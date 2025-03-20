@@ -116,7 +116,7 @@ class cmd:
             else:
                 book_row = book_row.head(1)  # Get the first match
                 print(f"{Style.BRIGHT + FG.H5555FF}[{FG.RESET + FG.H00AAAA}INFO{FG.RESET + Style.BRIGHT + FG.H5555FF}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} Información del libro '{book_name}':{FG.RESET + Style.RESET_ALL}")
-                print(book_row.to_string(index=False))  # Imprime sin índices
+                print(book_row.to_string(index=False, col_space=15))  # Imprime sin índices con espacio entre columnas
         except Exception as e:
             print(f"{Style.BRIGHT + FG.HFF0000}[{FG.RESET + FG.HFF5555}ERROR{FG.RESET + Style.BRIGHT + FG.HFF0000}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} Error al buscar el libro: {str(e)}{FG.RESET + Style.RESET_ALL}")
 
@@ -159,7 +159,7 @@ class cmd:
                 start_row = (page - 1) * page_size
                 end_row = min(start_row + page_size, total_rows)  
                 print(f"{Style.BRIGHT + FG.H443A3B}[{FG.RESET + FG.HAAAAAA}CONSOLA{FG.RESET + Style.BRIGHT + FG.H443A3B}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} Mostrando elementos de la página {page} (filas {start_row + 1} a {end_row}) de la hoja '{sheet_name}':{FG.RESET + Style.RESET_ALL}")
-                print(df.iloc[start_row:end_row].to_string(index=False))  # Imprime sin índices
+                print(df.iloc[start_row:end_row].to_string(index=False, col_space=15))  # Imprime sin índices con espacio entre columnas
             except Exception as e:
                 print(f"{Style.BRIGHT + FG.HFF0000}[{FG.RESET + FG.HFF5555}ERROR{FG.RESET + Style.BRIGHT + FG.HFF0000}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} Error al leer la base de datos: {str(e)}{FG.RESET + Style.RESET_ALL}")
 
@@ -226,6 +226,47 @@ class cmd:
 
         except Exception as e:
             print(f"{Style.BRIGHT + FG.HFF0000}[{FG.RESET + FG.HFF5555}ERROR{FG.RESET + FG.HFF0000}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} Error al procesar la acción: {str(e)}{FG.RESET + Style.RESET_ALL}")
+
+    def registro(self, *args):
+        if len(args) < 1:
+            print(f"{Style.BRIGHT + FG.HFF0000}[{FG.RESET + FG.HFF5555}ERROR{FG.RESET + Style.BRIGHT + FG.HFF0000}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} Uso incorrecto. Sintaxis: registro [int:pagina] [str:base_de_datos]{FG.RESET + Style.RESET_ALL}")
+            return
+
+        try:
+            page = int(args[0])  # Número de página
+            base_de_datos = f"db\\{args[1]}.xlsx" if len(args) > 1 else os.getenv('PATH_REGISTER')
+
+            if not os.path.exists(base_de_datos):
+                print(f"{Style.BRIGHT + FG.HFF0000}[{FG.RESET + FG.HFF5555}ERROR{FG.RESET + Style.BRIGHT + FG.HFF0000}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} La base de datos '{base_de_datos}' no existe.{FG.RESET + Style.RESET_ALL}")
+                return
+
+            try:
+                data = pd.read_excel(base_de_datos, sheet_name=None)
+                sheet_names = list(data.keys())
+
+                if not sheet_names:
+                    print(f"{Style.BRIGHT + FG.HFF0000}[{FG.RESET + FG.HFF5555}ERROR{FG.RESET + Style.BRIGHT + FG.HFF0000}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} La base de datos no contiene hojas.{FG.RESET + Style.RESET_ALL}")
+                    return
+
+                sheet_name = sheet_names[0]
+                df = data[sheet_name]
+                page_size = 10
+                total_rows = len(df)
+                total_pages = (total_rows + page_size - 1) // page_size  # Calcular páginas totales
+
+                if page < 1 or page > total_pages:
+                    print(f"{Style.BRIGHT + FG.HFF0000}[{FG.RESET + FG.HFF5555}ERROR{FG.RESET + Style.BRIGHT + FG.HFF0000}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} Página inválida. Hay {total_pages} páginas disponibles.{FG.RESET + Style.RESET_ALL}")
+                    return
+
+                start_row = (page - 1) * page_size
+                end_row = min(start_row + page_size, total_rows)  
+                print(f"{Style.BRIGHT + FG.H443A3B}[{FG.RESET + FG.HAAAAAA}CONSOLA{FG.RESET + Style.BRIGHT + FG.H443A3B}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} Mostrando elementos de la página {page} (filas {start_row + 1} a {end_row}) de la hoja '{sheet_name}':{FG.RESET + Style.RESET_ALL}")
+                print(df.iloc[start_row:end_row].to_string(index=False, col_space=15))  # Imprime sin índices con espacio entre columnas
+            except Exception as e:
+                print(f"{Style.BRIGHT + FG.HFF0000}[{FG.RESET + FG.HFF5555}ERROR{FG.RESET + Style.BRIGHT + FG.HFF0000}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} Error al leer la base de datos: {str(e)}{FG.RESET + Style.RESET_ALL}")
+
+        except ValueError:
+            print(f"{Style.BRIGHT + FG.HFF0000}[{FG.RESET + FG.HFF5555}ERROR{FG.RESET + Style.BRIGHT + FG.HFF0000}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} La página debe ser un número entero.{FG.RESET + Style.RESET_ALL}")
 
     def cls(self):
         os.system('cls' if os.name == 'nt' else 'clear')
