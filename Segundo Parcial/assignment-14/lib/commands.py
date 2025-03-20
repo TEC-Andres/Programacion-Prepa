@@ -10,11 +10,12 @@
 #       Archivo: lib/commands.py
 #
 #       Creado:                   13/03/2024
-#       Última Modificación:      14/03/2024
+#       Última Modificación:      19/03/2024
 '''
 import os
 import sys
 from lib.color import FG, Style, checkInfo
+import pandas as pd
 
 class Dict(dict):
     mensajes_ayuda = {
@@ -25,6 +26,10 @@ class Dict(dict):
         'cls': {
             'description': 'Limpia la consola.',
             'syntax': 'cls'
+        },
+        'db': {
+            'description': 'Imprime a la consola los primeros 10 elementos de la base de datos.',
+            'syntax': 'db [str:base_de_datos] [int:hoja]'
         },
         'salir': {
             'description': 'Cierra el programa.',
@@ -42,7 +47,8 @@ class cmd:
 
     def init(self):
         print(f"{Style.BRIGHT + FG.H5555FF}[{FG.RESET + FG.H00AAAA}INFO{FG.RESET + Style.BRIGHT + FG.H5555FF}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} Iniciando el programa.{FG.RESET + Style.RESET_ALL}")
-        print(f"{Style.BRIGHT + FG.H5555FF}[{FG.RESET + FG.H00AAAA}INFO{FG.RESET + Style.BRIGHT + FG.H5555FF}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} Conenctando a la base de datos: {FG.H00AA00 + os.path.basename(self.file_path) + FG.RESET}.{FG.RESET + Style.RESET_ALL}")
+        print(f"{Style.BRIGHT + FG.H5555FF}[{FG.RESET + FG.H00AAAA}INFO{FG.RESET + Style.BRIGHT + FG.H5555FF}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} Conenctando a la base de datos: {FG.H00AA00 + os.path.basename(self.file_path_db) + FG.RESET}.{FG.RESET + Style.RESET_ALL}")
+        print(f"{Style.BRIGHT + FG.H5555FF}[{FG.RESET + FG.H00AAAA}INFO{FG.RESET + Style.BRIGHT + FG.H5555FF}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} Conenctando al registro: {FG.H00AA00 + os.path.basename(self.file_path_register) + FG.RESET}.{FG.RESET + Style.RESET_ALL}")
         print(f"{Style.BRIGHT + FG.H5555FF}[{FG.RESET + FG.H00AAAA}INFO{FG.RESET + Style.BRIGHT + FG.H5555FF}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} Para ver la lista de comandos, escriba 'ayuda' en la consola.{FG.RESET + Style.RESET_ALL}")
 
     def ayuda(self, *args):
@@ -70,6 +76,63 @@ class cmd:
     def salir(self):
         print(f"{Style.BRIGHT + FG.H5555FF}[{FG.RESET + FG.H00AAAA}INFO{FG.RESET + Style.BRIGHT + FG.H5555FF}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} Programa cerrado con éxito.{FG.RESET + Style.RESET_ALL}")
         sys.exit()
+
+    # db [str:base_de_datos] [int:hoja] hoja referring to the sheet number in the excel file (a.k.a. if it's page 2, it will go from 11 to 20)
+    def db(self, *args):
+        #db null null
+        if not args: 
+            base_de_datos = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'db\\books.xlsx')
+
+            if not os.path.exists(base_de_datos):
+                print(f"{Style.BRIGHT + FG.HFF0000}[{FG.RESET + FG.HFF5555}ERROR{FG.RESET + Style.BRIGHT + FG.HFF0000}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} La base de datos '{base_de_datos}' no existe.{FG.RESET + Style.RESET_ALL}")
+                return
+
+            try:
+                data = pd.read_excel(base_de_datos, sheet_name=None)
+                sheet_names = list(data.keys())
+
+                if not sheet_names:
+                    print(f"{Style.BRIGHT + FG.HFF0000}[{FG.RESET + FG.HFF5555}ERROR{FG.RESET + Style.BRIGHT + FG.HFF0000}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} La base de datos no contiene hojas.{FG.RESET + Style.RESET_ALL}")
+                    return
+
+                sheet_name = sheet_names[0]
+                df = data[sheet_name]
+                print(f"{Style.BRIGHT + FG.H443A3B}[{FG.RESET + FG.HAAAAAA}CONSOLA{FG.RESET + Style.BRIGHT + FG.H443A3B}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} Mostrando los primeros 10 elementos de la hoja '{sheet_name}':{FG.RESET + Style.RESET_ALL}")
+                print(df.head(10))
+                return
+            except Exception as e:
+                print(f"{Style.BRIGHT + FG.HFF0000}[{FG.RESET + FG.HFF5555}ERROR{FG.RESET + Style.BRIGHT + FG.HFF0000}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} Error al leer la base de datos: {str(e)}{FG.RESET + Style.RESET_ALL}")
+        
+        if len(args) < 2:
+            print(f"{Style.BRIGHT + FG.HFF0000}[{FG.RESET + FG.HFF5555}ERROR{FG.RESET + Style.BRIGHT + FG.HFF0000}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} Uso incorrecto. Sintaxis: db [int:hoja] [str:base_de_datos]{FG.RESET + Style.RESET_ALL}")
+            return
+
+        try:
+            hoja = int(args[0])
+            base_de_datos = f"db\\{args[1]}.xlsx"
+
+            if not os.path.exists(base_de_datos):
+                print(f"{Style.BRIGHT + FG.HFF0000}[{FG.RESET + FG.HFF5555}ERROR{FG.RESET + Style.BRIGHT + FG.HFF0000}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} La base de datos '{base_de_datos}' no existe.{FG.RESET + Style.RESET_ALL}")
+                return
+
+            try:
+                data = pd.read_excel(base_de_datos, sheet_name=None)
+                sheet_names = list(data.keys())
+
+                if hoja < 1 or hoja > len(sheet_names):
+                    print(f"{Style.BRIGHT + FG.HFF0000}[{FG.RESET + FG.HFF5555}ERROR{FG.RESET + Style.BRIGHT + FG.HFF0000}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} Número de hoja inválido. Hay {len(sheet_names)} hojas disponibles.{FG.RESET + Style.RESET_ALL}")
+                    return
+
+                sheet_name = sheet_names[hoja - 1]
+                df = data[sheet_name]
+                print(f"{Style.BRIGHT + FG.H443A3B}[{FG.RESET + FG.HAAAAAA}CONSOLA{FG.RESET + Style.BRIGHT + FG.H443A3B}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} Mostrando los primeros 10 elementos de la hoja '{sheet_name}':{FG.RESET + Style.RESET_ALL}")
+                print(df.head(10))
+            except Exception as e:
+                print(f"{Style.BRIGHT + FG.HFF0000}[{FG.RESET + FG.HFF5555}ERROR{FG.RESET + Style.BRIGHT + FG.HFF0000}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} Error al leer la base de datos: {str(e)}{FG.RESET + Style.RESET_ALL}")
+
+        except ValueError:
+            print(f"{Style.BRIGHT + FG.HFF0000}[{FG.RESET + FG.HFF5555}ERROR{FG.RESET + Style.BRIGHT + FG.HFF0000}] {FG.RESET + FG.H443A3B}―{FG.RESET + Style.RESET_ALL} El número de hoja debe ser un entero.{FG.RESET + Style.RESET_ALL}")
+
 
     def cls(self):
         os.system('cls' if os.name == 'nt' else 'clear')

@@ -10,7 +10,7 @@
 #       Archivo: lib/color.py
 #
 #       Creado:                   13/03/2024
-#       Última Modificación:      14/03/2024
+#       Última Modificación:      19/03/2024
 '''
 class CustomColor:
     def __init__(self, hex_color):

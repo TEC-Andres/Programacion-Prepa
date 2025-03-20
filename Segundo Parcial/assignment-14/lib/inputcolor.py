@@ -10,7 +10,7 @@
 #       Archivo: lib/InputColor.py
 #
 #       Creado:                   13/03/2024
-#       Última Modificación:      14/03/2024
+#       Última Modificación:      19/03/2024
 '''
 import sys
 import re
@@ -18,16 +18,15 @@ import msvcrt
 from lib.color import FG, Style
 
 class InputColor:
-    # ANSI reverse video for selection; adjust if needed.
     SELECT_STYLE = "\033[7m"
 
     def __init__(self, prompt="Escribe algo: "):
         self.prompt = prompt
         self.user_input = ""
         self.cursor_position = 0
-        self.history = []         # store past commands
-        self.history_index = None # index into history for retrieval
-        self.all_selected = False # flag for Ctrl+A "select all"
+        self.history = []
+        self.history_index = None 
+        self.all_selected = False 
 
     def start_input(self):
         sys.stdout.write(self.prompt)
@@ -35,50 +34,36 @@ class InputColor:
 
         while True:
             key = msvcrt.getch()
-
-            # Allow Ctrl+C (ETX, b'\x03') to raise KeyboardInterrupt
-            if key == b'\x03':
-                raise KeyboardInterrupt
-
-            # Special keys (arrow keys and others) come in two bytes.
-            if key in (b'\x00', b'\xe0'):
-                key2 = msvcrt.getch()
-                if key2 == b'H':  # Up arrow: history back
-                    self._handle_history_up()
-                elif key2 == b'P':  # Down arrow: history forward
-                    self._handle_history_down()
-                elif key2 == b'K':  # Left arrow: move cursor left
-                    self._handle_left_arrow()
-                elif key2 == b'M':  # Right arrow: move cursor right
-                    self._handle_right_arrow()
-                continue
-
-            # Ctrl+A (ASCII 1) selects everything.
-            if key == b'\x01':
-                self._handle_ctrl_a()
-                continue
-
-            # Enter key ends input.
-            if key == b"\r":
-                break
-
-            # Backspace (ASCII 8)
-            elif key == b"\x08":
-                self._handle_backspace()
-                continue
-
-            # For printable characters:
-            elif key.isascii() and key.decode("utf-8").isprintable():
-                self._handle_printable(key.decode("utf-8"))
-                continue
-
-            # (Other keys can be ignored or handled as needed)
-
-        print()  # Move to next line after input
+            match key:
+                case b'\x03':  # Allow Ctrl+C (ETX) to raise KeyboardInterrupt
+                    raise KeyboardInterrupt
+                case b'\x00' | b'\xe0':  # Special keys (arrow keys and others)
+                    key2 = msvcrt.getch()
+                    match key2:
+                        case b'H':  # Up arrow: history back
+                            self._handle_history_up()
+                        case b'P':  # Down arrow: history forward
+                            self._handle_history_down()
+                        case b'K':  # Left arrow: move cursor left
+                            self._handle_left_arrow()
+                        case b'M':  # Right arrow: move cursor right
+                            self._handle_right_arrow()
+                    continue
+                case b'\x01':  # Ctrl+A (ASCII 1) selects everything
+                    self._handle_ctrl_a()
+                    continue
+                case b"\r":  # Enter key ends input
+                    break
+                case b"\x08":  # Backspace (ASCII 8)
+                    self._handle_backspace()
+                    continue
+                case _ if key.isascii() and key.decode("utf-8").isprintable():  # Printable characters
+                    self._handle_printable(key.decode("utf-8"))
+                    continue
+        print() 
         result = self.user_input
         if result:
             self.history.append(result)
-        # Reset for next input
         self.user_input = ""
         self.cursor_position = 0
         self.history_index = None
@@ -158,13 +143,14 @@ class InputColor:
         self._update_display()
 
     def _update_display(self):
-    # If all text is selected, override with selection style.
+        # Hide the cursor
+        sys.stdout.write("\033[?25l")
+        
         if self.all_selected:
             colored_input = self.SELECT_STYLE + self.user_input + Style.RESET_ALL
         else:
             color_map = {
                 "salir": FG.H00AAAA,
-                #"cls": FG.H00AAAA
             }
             words = self.user_input.split()
             colored_input = self.user_input
@@ -189,4 +175,8 @@ class InputColor:
         # Reposition the hardware cursor:
         cursor_abs_pos = len(self.prompt) + self.cursor_position
         sys.stdout.write(f"\r\033[{cursor_abs_pos+1}G")
+        
+        # Show the cursor again
+        sys.stdout.write("\033[?25h")
         sys.stdout.flush()
+

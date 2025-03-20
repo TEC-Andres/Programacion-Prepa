@@ -10,7 +10,7 @@
 #       Archivo: main.py
 #
 #       Creado:                   13/03/2024
-#       Última Modificación:      14/03/2024
+#       Última Modificación:      19/03/2024
 '''
 import os
 from lib.commands import cmd
@@ -19,8 +19,8 @@ from lib.inputcolor import InputColor
 
 class Main:
     def __init__(self):
-        self.file_path = os.path.join(os.path.dirname(__file__), 'db\\books.xlsx')
-        self.df = pd.read_excel(self.file_path)
+        self.file_path_db = os.path.join(os.path.dirname(__file__), 'db\\books.xlsx')
+        self.file_path_register = os.path.join(os.path.dirname(__file__), 'db\\registro.xlsx')
         cmd.init(self)
 
 if __name__ == "__main__":
