@@ -53,32 +53,43 @@ while True:
 ## Pasos de instalación
 ### Con curl
 1.- Abre command prompt o powershell 
+
 2.- Escribe el siguiente comando en tu consola
 ```sh
 curl -L "https://drive.google.com/uc?export=download&id=18RIVLym9fFeWjOosVT753X2ksl0zuBMv" -o "%USERPROFILE%\Downloads\main.zip"
 ```
+
 3.- Extrae el archivo .zip
+
 4.- Entra al archivo usando `cd "directorio\assignment-14"`
+
 5.- Instala los requerimientos corriendo el siguiente comando en la terminal
 ```sh
 pip install -r requirements.txt
 ```
+
 6.- Corre el archivo de python con el siguiente comando
 ```sh
 python main.py
 ```
 ### Con github
 1.- Abre la siguiente liga
+
 ```sh
 https://github.com/TEC-Andres/Programacion-Prepa/tree/master/Segundo%20Parcial/assignment-14
 ```
+
 2.- Descarga el archivo en formato .zip
+
 3.- Extraelo en explorador de archivos.
+
 4.- Abre el folder en VSCode
+
 5.- Instala los requerimientos corriendo el siguiente comando en la terminal
 ```sh
 pip install -r requirements.txt
 ```
+
 6.- Corre el archivo de python con el siguiente comando
 ```sh
 python main.py
