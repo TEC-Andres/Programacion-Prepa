@@ -151,6 +151,7 @@ class InputColor:
         else:
             color_map = {
                 "salir": FG.H00AAAA,
+                "cls": FG.H888888,
             }
             words = self.user_input.split()
             colored_input = self.user_input
